@@ -12,7 +12,7 @@ class Isotherm:
         self.q = q
 
 
-def load(path, nist_csv=False):
+def load(path, p0=1, nist_csv=False):
     isotherm = Isotherm([], [])
     if nist_csv:
         with open(path, 'r') as file:
@@ -21,7 +21,7 @@ def load(path, nist_csv=False):
             for column in csv_reader:
                 try:
                     if column[0].split(",")[0] == 'pressure':
-                        isotherm.p.append(float(column[1].split(",")[0]))
+                        isotherm.p.append(float(column[1].split(",")[0])/p0)
                     if column[0].split(",")[0] == 'adsorption':
                         isotherm.q.append(float(column[1].split(",")[0]))
                 except IndexError or ValueError or TypeError:
@@ -38,7 +38,7 @@ def load(path, nist_csv=False):
 
 
 def plot(isotherm):
-    plt.plot(isotherm.p, isotherm.q)
+    plt.scatter(isotherm.p, isotherm.q)
     plt.show()
 
 

@@ -1,4 +1,4 @@
-import load
+from pyMono import load
 
 
 def create(p, param, model):

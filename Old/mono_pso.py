@@ -1,6 +1,5 @@
 import random
 import numpy as np
-from mono_iso import langmuir as langmuir
 
 
 class Particle:

@@ -1,15 +1,6 @@
 import csv
 import pandas as pd
-import matplotlib.pyplot as plt
-
-
-class Isotherm:
-    p = list
-    q = list
-
-    def __init__(self, p, q):
-        self.p = p
-        self.q = q
+from pyMono.Isotherm import Isotherm
 
 
 def load(path, p0=1, nist_csv=False):
@@ -35,11 +26,6 @@ def load(path, p0=1, nist_csv=False):
         else:
             return 'File not readable'
         return isotherm
-
-
-def plot(isotherm):
-    plt.scatter(isotherm.p, isotherm.q)
-    plt.show()
 
 
 

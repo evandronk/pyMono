@@ -18,6 +18,8 @@ def call_model(q_func):
             q_obj = __modified_bet_q__
         case "multisite":
             q_obj = __langmuir_multi_q__
+        case _:
+            q_obj = False
 
     return q_obj
 
@@ -27,18 +29,21 @@ def obj_func(p, qe, param, q_func, relative=False):
 
     q_obj = call_model(q_func)
 
-    result = 0
-    for i in range(len(p)):
-        try:
-            np.seterr(all='ignore')
-            value = q_obj(p[i], param)
-            if relative:
-                result = result + abs((qe[i] - value) / qe[i]) ** 2
-            else:
-                result = result + abs(qe[i] - value) ** 2
-        except ValueError or TypeError or IndexError or ZeroDivisionError:
-            result = result + 1e8
-    return result
+    if q_obj is False:
+        return "Erro! Modelo não implementado."
+    else:
+        result = 0
+        for i in range(len(p)):
+            try:
+                np.seterr(all='ignore')
+                value = q_obj(p[i], param)
+                if relative:
+                    result = result + abs((qe[i] - value) / qe[i]) ** 2
+                else:
+                    result = result + abs(qe[i] - value) ** 2
+            except ValueError or TypeError or IndexError or ZeroDivisionError:
+                result = result + 1e8
+        return result
 
 
 def __langmuir_q__(press, param):

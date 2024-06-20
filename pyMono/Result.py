@@ -1,6 +1,6 @@
 import numpy as np
+from scipy import stats
 from matplotlib import pyplot as plt
-
 from pyMono.Isotherm import Isotherm
 
 
@@ -141,3 +141,16 @@ class Result:
         self.std_quadratic_error()
 
         print("-----------------------------------")
+
+    def kruskal(self):
+        print("-----------------------------------")
+        print('Kruskal Wallis Test:')
+        kruskal_result = stats.kruskal(self.exp_isotherm.q, self.sim_isotherm.q)
+        print("statistic: " + str(kruskal_result[0]))
+        print("p-value: " + str(kruskal_result[1]))
+        if kruskal_result[1] < 0.05:
+            print("There is significant difference between sample medians")
+        else:
+            print("There is NO significant difference between sample medians")
+        print("-----------------------------------")
+

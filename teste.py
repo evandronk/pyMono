@@ -7,4 +7,4 @@ resultado = Mono.estimate(data.p, data.q, 'teste')
 resultado.plot()
 
 resultado.kruskal()
-resultado.error_all()
+resultado.error_all() 

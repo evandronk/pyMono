@@ -16,20 +16,34 @@ class Result:
         self.exp_isotherm = exp_isotherm
         self.sim_isotherm = sim_isotherm
 
-    def plot(self):
-        plt.scatter(self.exp_isotherm.p, self.exp_isotherm.q, color='black')
-        plt.plot(self.sim_isotherm.p, self.sim_isotherm.q)
-        plt.show()
-        plt.close()
+    def plot(self, export=False, extension='png', only_exp=False, only_sim=False):
 
-    def plot_exp(self):
-        plt.scatter(self.exp_isotherm.p, self.exp_isotherm.q)
-        plt.show()
-        plt.close()
+        new_p_exp, new_q_exp = (list(t) for t in zip(*sorted(zip(self.exp_isotherm.p, self.exp_isotherm.q))))
+        new_p_sim, new_q_sim = (list(t) for t in zip(*sorted(zip(self.sim_isotherm.p, self.sim_isotherm.q))))
+        if not only_exp:
+            plt.plot(new_p_sim, new_q_sim, color='blue')
+        else:
+            plt.legend(['Experimental'], frameon=False, loc='lower right')
+        if not only_sim:
+            plt.scatter(new_p_exp, new_q_exp, color='black')
+        else:
+            plt.legend(['Simulated'], frameon=False, loc='lower right')
+        if not only_exp and not only_sim:
+            plt.legend(['Experimental', 'Simulated'], frameon=False, loc='lower right')
+        plt.gca().spines['top'].set_visible(False)
+        plt.gca().spines['right'].set_visible(False)
+        plt.xlabel(r'P or C')
+        plt.ylabel(r'q')
+        fig = plt.gcf()
 
-    def plot_sim(self):
-        plt.plot(self.sim_isotherm.p, self.sim_isotherm.q)
         plt.show()
+        if export:
+            name = input('File Name: ')
+            if extension == 'png' or extension == 'svg':
+                fig.savefig(name + '.' + extension, format=extension, bbox_inches='tight')
+            else:
+                print('Only png or svg supported.')
+
         plt.close()
 
     def error(self):

@@ -13,5 +13,5 @@ setup(name='pyMono',
     keywords='isotherm particle-swarm-optimization simulator',
     description=u'Descricao',
     packages=['pyMono'],
-    install_requires=['pandas', 'numpy', 'matplotlib'],)
+    install_requires=['pandas', 'numpy', 'matplotlib','scipy'],)
 

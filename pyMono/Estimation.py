@@ -12,25 +12,20 @@ def estimate(p, qe, model, part_n=100, iter_n=100, param=[[0.1, 10], [1, 100], [
     particles_list = []
     swarm_best_fitness = float('inf')
     swarm_best_position = [1, 1, 1]
-    #print(param)
     for _ in range(part_n):
         for _ in range(comp_n):
             particle = Particle(param)
             fitness = obj_func(p, qe, particle.position, model, relative)
-            if isinstance(fitness, str):
-                print(fitness)
-                return
-            else:
-                particle.fitness = fitness
-                particle.best_position = particle.position.copy()
-                particle.best_fitness = fitness
-                particles_list.append(particle)
-                if _ == 0:
-                    swarm_best_fitness = fitness
-                    swarm_best_position = particle.position.copy()
-                if fitness < swarm_best_fitness:
-                    swarm_best_fitness = fitness
-                    swarm_best_position = particle.position.copy()
+            particle.fitness = fitness
+            particle.best_position = particle.position.copy()
+            particle.best_fitness = fitness
+            particles_list.append(particle)
+            if _ == 0:
+                swarm_best_fitness = fitness
+                swarm_best_position = particle.position.copy()
+            if fitness < swarm_best_fitness:
+                swarm_best_fitness = fitness
+                swarm_best_position = particle.position.copy()
 
     for _ in range(iter_n):
         for particle in particles_list:

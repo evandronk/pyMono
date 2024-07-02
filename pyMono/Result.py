@@ -10,7 +10,8 @@ class Result:
     exp_isotherm: Isotherm
     sim_isotherm: Isotherm
 
-    def __init__(self, parameters, fitness, exp_isotherm, sim_isotherm):
+    def __init__(self, parameters: list, fitness: float, exp_isotherm: Isotherm, sim_isotherm: Isotherm):
+
         self.parameters = parameters
         self.fitness = fitness
         self.exp_isotherm = exp_isotherm
@@ -42,7 +43,7 @@ class Result:
             if extension == 'png' or extension == 'svg':
                 fig.savefig(name + '.' + extension, format=extension, bbox_inches='tight')
             else:
-                print('Only png or svg supported.')
+                raise TypeError('Only png or svg supported.')
 
         plt.close()
 

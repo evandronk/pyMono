@@ -30,7 +30,7 @@ def obj_func(p, qe, param, q_func, relative=False):
     q_obj = call_model(q_func)
 
     if q_obj is False:
-        raise ValueError("Erro! Modelo não implementado.")
+        raise ValueError("Unknown model was given.")
 
     result = 0
     for i in range(len(p)):

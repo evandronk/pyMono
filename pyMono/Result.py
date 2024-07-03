@@ -21,15 +21,15 @@ class Result:
 
         new_p_exp, new_q_exp = (list(t) for t in zip(*sorted(zip(self.exp_isotherm.p, self.exp_isotherm.q))))
         new_p_sim, new_q_sim = (list(t) for t in zip(*sorted(zip(self.sim_isotherm.p, self.sim_isotherm.q))))
-        if not only_exp:
-            plt.plot(new_p_sim, new_q_sim, color='blue')
-        else:
-            plt.legend(['Experimental'], frameon=False, loc='lower right')
-        if not only_sim:
+        if only_exp and not only_sim:
             plt.scatter(new_p_exp, new_q_exp, color='black')
-        else:
+            plt.legend(['Experimental'], frameon=False, loc='lower right')
+        elif only_sim and not only_exp:
+            plt.plot(new_p_sim, new_q_sim, color='blue')
             plt.legend(['Simulated'], frameon=False, loc='lower right')
-        if not only_exp and not only_sim:
+        else:
+            plt.scatter(new_p_exp, new_q_exp, color='black')
+            plt.plot(new_p_sim, new_q_sim, color='blue')
             plt.legend(['Experimental', 'Simulated'], frameon=False, loc='lower right')
         plt.gca().spines['top'].set_visible(False)
         plt.gca().spines['right'].set_visible(False)
@@ -43,7 +43,7 @@ class Result:
             if extension == 'png' or extension == 'svg':
                 fig.savefig(name + '.' + extension, format=extension, bbox_inches='tight')
             else:
-                raise TypeError('Only png or svg supported.')
+                exit(TypeError('ERROR: Only png or svg supported.'))
 
         plt.close()
 

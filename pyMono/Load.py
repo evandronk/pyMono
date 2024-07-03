@@ -8,8 +8,8 @@ def load(path, p0=1, nist_csv=False):
 
     try:
         if nist_csv:
-            if path.endswith('.xlsx'):
-                raise TypeError("The file extension must be .csv if nist_csv is True")
+            if not path.endswith('.csv'):
+                exit(TypeError("ERROR: The file extension must be .csv if nist_csv is True"))
             with open(path, 'r') as file:
                 csv_reader = csv.reader(file)
                 next(csv_reader)
@@ -23,18 +23,17 @@ def load(path, p0=1, nist_csv=False):
                         pass
             return isotherm
         else:
-            if path.endswith('.csv'):
-                raise TypeError("The file extension must be .xlsx if nist_csv is False")
+            if not path.endswith('.xlsx'):
+                exit(TypeError("ERROR: The file extension must be .xlsx if nist_csv is False"))
             file = pd.read_excel(path, usecols='A,B')
             if file.columns[0] != 'A' or file.columns[1] != 'B':
-                raise ValueError("The input file must have columns A,B")
+                exit(ValueError("ERROR: The input file must have columns A,B"))
+            else:
                 isotherm.p = file[str(file.columns[0])].tolist()
                 isotherm.q = file[str(file.columns[1])].tolist()
-            else:
-                return 'File not readable'
             return isotherm
     except FileNotFoundError:
-        raise FileNotFoundError("File not found")
+        exit(FileNotFoundError("ERROR: File not found"))
 
 
 

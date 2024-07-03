@@ -40,6 +40,22 @@ def estimate(p, qe, model, part_n=100, iter_n=100, param=[[0.1, 10], [1, 100], [
                 swarm_best_fitness = fitness
                 swarm_best_position = particle.position.copy()
 
+    if not isinstance(swarm_best_fitness, (int, float)):
+        exit(ValueError("ERROR: Swarm best fitness is not a number"))
+
+    if swarm_best_fitness == float('inf'):
+        exit(ValueError("ERROR: Swarm best fitness is infinite"))
+
+    if not all(isinstance(n, (float, int)) for n in swarm_best_position):
+        exit(ValueError("ERROR: There are parameters that are not numbers"))
+
+    if any(n == float('inf') for n in swarm_best_position):
+        exit(ValueError("ERROR: There are parameters that are infinite"))
+
+    if any(n < 0 for n in swarm_best_position):
+        print(f'{'\033[93m'}WARNING: There are parameters that are negative')
+
+
     exp_iso = Isotherm(p, qe)
 
     qsim = []

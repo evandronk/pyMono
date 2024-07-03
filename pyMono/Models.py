@@ -19,7 +19,7 @@ def call_model(q_func):
         case "multisite":
             q_obj = __langmuir_multi_q__
         case _:
-            q_obj = False
+            exit(ValueError("ERROR: Unknown model was given."))
 
     return q_obj
 
@@ -28,9 +28,6 @@ def call_model(q_func):
 def obj_func(p, qe, param, q_func, relative=False):
 
     q_obj = call_model(q_func)
-
-    if q_obj is False:
-        raise ValueError("Unknown model was given.")
 
     result = 0
     for i in range(len(p)):
@@ -90,9 +87,6 @@ def __bet_q__(p, param):
 
 
 #################### gab ####################
-
-
-
 def __gab_q__(p, param):
     qm = param[0]
     C = param[1]
@@ -130,6 +124,7 @@ def newton(p, q, param):
         except ValueError or TypeError or IndexError or ZeroDivisionError:
             return 1e8
     return q
+
 
 def __langmuir_multi_q__(p, param):
     q = 0.5

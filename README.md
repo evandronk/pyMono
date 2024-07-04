@@ -61,7 +61,7 @@ result.error_all()
 
 ## Isotherm Models
 
-<img width="300" alt="Formulas" src="https://github.com/evandronk/pyMono/blob/main/formulas.jpeg?raw=true">
+<img width="500" alt="Formulas" src="https://github.com/evandronk/pyMono/blob/main/formulas.jpeg?raw=true">
 
 ## Classes and Methods
 
